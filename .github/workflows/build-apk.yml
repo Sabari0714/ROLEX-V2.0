@@ -1,5 +1,4 @@
 # ROLEX AI v2.2.0 — CI + Android APK build pipeline
-# Push a tag like v2.2.0 to build the APK, or run manually via workflow_dispatch.
 name: ROLEX CI + APK
 
 on:
@@ -10,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: Test suite (267 tests)
+    name: Test suite
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
@@ -28,7 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest
           python -m pytest tests/ -q
-      - name: Self-test verdict (HEALTHY/DEGRADED only)
+      - name: Self-test verdict
         run: |
           python - <<'PY'
           import sys; sys.path.insert(0, ".")
@@ -48,10 +47,13 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v5
 
-      - name: Set up Python 3.11
+      # Buildozer 1.5.0/p4a has known host-Python 3.11 compatibility
+      # problems in the hostpython3/jnius build path. Use Python 3.10
+      # for the Android toolchain while keeping the project test job on 3.11.
+      - name: Set up Python 3.10 for Android toolchain
         uses: actions/setup-python@v6
         with:
-          python-version: "3.11"
+          python-version: "3.10"
 
       - name: Install system dependencies (Buildozer + PDF support)
         run: |
@@ -84,11 +86,20 @@ jobs:
           assert report["verdict"] in ("HEALTHY", "DEGRADED"), "self-test failed — refusing to build APK"
           PY
 
+      - name: Remove stale Android build state
+        run: |
+          rm -rf .buildozer bin
+
       - name: Accept Android SDK licenses and build APK
         env:
           APP_ANDROID_ACCEPT_SDK_LICENSE: "1"
         run: |
           yes | buildozer -v android debug
+
+      - name: Verify APK output
+        run: |
+          test -n "$(find bin -maxdepth 1 -type f -name '*.apk' -print -quit)"
+          ls -lh bin/*.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
