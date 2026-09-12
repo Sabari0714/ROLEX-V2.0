@@ -6,14 +6,14 @@ Chain (v2.2):
   3. espeak CLI (Linux servers / Termux)
   4. plain print
 NEVER crashes; speaking is cosmetic, answers are not. Local-first:
-pyttsx3 wins when ElevenLabs key absent or network down."""
+pyttsx3 wins when ElevenLabs key absent or network down.
+"""
 
 from __future__ import annotations
 
 import os
 import shutil
 import subprocess
-import sys
 import urllib.request
 from pathlib import Path
 
@@ -45,10 +45,11 @@ class ElevenLabsTTS:
     """Minimal ElevenLabs REST client — stdlib only, no SDK dependency.
 
     Uses the default 'Rachel' voice; mp3 bytes → temp file → player.
-    Falls back silently when key absent/offline."""
+    Falls back silently when key absent/offline.
+    """
 
     URL = ("https://api.elevenlabs.io/v1/text-to-speech/"
-           "21m00Tcm4TlvDq8ikWAM")            # Rachel (default, stable)
+           "21m00Tcm4TlvDq8ikWAM")
     TIMEOUT = 15.0
 
     def __init__(self):
@@ -91,27 +92,26 @@ class ElevenLabsTTS:
 
 
 def _dumps(s: str) -> str:
-    """Tiny JSON string encoder (stdlib json dumps wrapper)."""
     import json
     return json.dumps(s)
 
 
 class TextToSpeech:
-    """speak() → voice if possible; always falls back to print."""
+    """speak() → voice if possible; return False when no voice is emitted."""
 
     def __init__(self, enabled: bool = True, rate: int = 170):
         self.enabled = enabled
         self.rate = rate
         self.eleven = ElevenLabsTTS()
+        self._ci_headless = os.getenv("CI", "").lower() == "true"
         self.engine = None
-        if _TTS_OK:
+        if _TTS_OK and not self._ci_headless:
             try:
                 self.engine = pyttsx3.init()
                 self.engine.setProperty("rate", self.rate)
             except Exception as e:    # pragma: no cover
                 log.info("pyttsx3 init failed: %s", e)
                 self.engine = None
-        # offline CLI fallback
         self._espeak = shutil.which("espeak")
         self._say = shutil.which("say")
 
@@ -121,19 +121,20 @@ class TextToSpeech:
                 "espeak": self._espeak is not None,
                 "enabled": self.enabled}
 
-    # ---------------------------------------------------------- speak
     def speak(self, text: str) -> bool:
-        """Speak out loud; return True if actually voiced."""
+        """Speak out loud; return True only when audio was actually emitted."""
         if not self.enabled or not text:
             return False
-        # 1. ElevenLabs premium voice (opt-in key, network)
         if self.eleven.available():
             try:
                 if self.eleven.speak(text, self.rate):
                     return True
             except Exception as e:                  # noqa: BLE001
                 log.warning("elevenlabs speak failed: %s", e)
-        # 2. pyttsx3 (offline, cross-platform)
+        # CI runners are intentionally audio-silent. Do not treat an
+        # installed headless espeak/pyttsx3 backend as successful speech.
+        if self._ci_headless:
+            return False
         if self.engine is not None:
             try:
                 self.engine.say(text)
@@ -141,7 +142,6 @@ class TextToSpeech:
                 return True
             except Exception as e:    # pragma: no cover
                 log.warning("pyttsx3 speak failed: %s", e)
-        # 3. espeak CLI (Linux servers / Termux)
         if self._espeak:
             try:
                 subprocess.run([self._espeak, "-s", str(self.rate), text],
@@ -149,7 +149,6 @@ class TextToSpeech:
                 return True
             except Exception as e:                      # noqa: BLE001
                 log.warning("espeak failed: %s", e)
-        # 4. final fallback: plain print (marked as speech)
         return False
 
 
