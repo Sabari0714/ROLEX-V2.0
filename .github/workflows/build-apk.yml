@@ -11,13 +11,18 @@ on:
 jobs:
   test:
     name: Test suite (267 tests)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
+      - name: Install system dependencies for document tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends poppler-utils
+          pdftotext -v
       - name: Run full pytest suite
         run: |
           python -m pip install --upgrade pip
@@ -36,31 +41,33 @@ jobs:
   build:
     needs: test
     name: Build Android APK (debug)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
-      - name: Install system dependencies (Buildozer needs these)
+      - name: Install system dependencies (Buildozer + PDF support)
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            git zip unzip openjdk-17-jdk autoconf libtool pkg-config \
-            zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 \
-            cmake libffi-dev libssl-dev
+            git zip unzip openjdk-17-jdk python3-pip python3-virtualenv \
+            autoconf libtool pkg-config zlib1g-dev libncurses5-dev \
+            libncursesw5-dev libtinfo6 cmake libffi-dev libssl-dev \
+            automake autopoint gettext poppler-utils
           java -version
+          pdftotext -v
 
       - name: Install build tools
         run: |
-          python -m pip install --upgrade pip wheel
-          pip install "buildozer==1.5.0" "cython==0.29.33"
+          python -m pip install --upgrade pip wheel setuptools virtualenv
+          pip install "buildozer==1.5.0" "cython==0.29.34"
 
       - name: Verify project imports before building
         run: |
@@ -77,8 +84,11 @@ jobs:
           assert report["verdict"] in ("HEALTHY", "DEGRADED"), "self-test failed — refusing to build APK"
           PY
 
-      - name: Buildozer android debug
-        run: buildozer -v android debug
+      - name: Accept Android SDK licenses and build APK
+        env:
+          APP_ANDROID_ACCEPT_SDK_LICENSE: "1"
+        run: |
+          yes | buildozer -v android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
