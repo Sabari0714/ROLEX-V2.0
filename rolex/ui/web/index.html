@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#04060f">
+<title>ROLEX AI &#183; Neon Horizon</title>
+<link rel="stylesheet" href="rolex.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='19' font-size='19'>&#128081;</text></svg>">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+<!-- FX canvas: starfield + nebula + route particles + bass waves -->
+<canvas id="fx"></canvas>
+
+<!-- ============ BOOT SPLASH ============ -->
+<div id="splash">
+  <svg class="scrown" viewBox="0 0 200 200" fill="none">
+    <defs>
+      <linearGradient id="spSplit" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#ff6a3c"/>
+        <stop offset=".5" stop-color="#d4af37"/>
+        <stop offset="1" stop-color="#19d3ff"/>
+      </linearGradient>
+    </defs>
+    <path d="M62 58 L70 34 L84 48 L100 26 L116 48 L130 34 L138 58" stroke="url(#spSplit)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M100 42 L148 66 L148 122 L100 146 L52 122 L52 66 Z" stroke="url(#spSplit)" stroke-width="3.5" stroke-linejoin="round" fill="rgba(8,12,26,.4)"/>
+    <circle cx="100" cy="88" r="9" fill="url(#spSplit)"/>
+  </svg>
+  <h1>ROLEX</h1>
+  <div class="sline"></div>
+  <div class="sver">NEON HORIZON &#183; v2.2.0</div>
+  <div class="sbar"><i></i></div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+
+  <!-- top bar -->
+  <header id="topbar">
+    <span class="brand">ROLEX</span>
+    <span id="voice-badge">VOICE &#183; JARVIS</span>
+    <span class="tspacer"></span>
+    <span class="chip"><i id="state-dot"></i><span id="state-txt">ONLINE</span></span>
+    <span class="chip">TURNS <b id="stat-turns">0</b></span>
+    <span class="chip">KB <b id="stat-kb">0</b></span>
+    <span class="chip">TODOS <b id="stat-todos">0</b></span>
+    <span class="chip" id="stat-uptime">0s</span>
+  </header>
+
+  <!-- crown rail -->
+  <nav id="rail">
+    <div class="crown" title="ROLEX &#183; Home">
+      <svg viewBox="0 0 200 200" fill="none">
+        <path d="M62 58 L70 34 L84 48 L100 26 L116 48 L130 34 L138 58" stroke="#d4af37" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M100 42 L148 66 L148 122 L100 146 L52 122 L52 66 Z" stroke="#d4af37" stroke-width="4" stroke-linejoin="round" fill="rgba(212,175,55,.12)"/>
+        <circle cx="100" cy="88" r="9" fill="#d4af37"/>
+      </svg>
+    </div>
+    <div class="rail-sep"></div>
+    <button class="rail-btn active" data-view="chat" data-tip="CONSOLE">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </button>
+    <button class="rail-btn" data-view="dash" data-tip="DASHBOARD">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+    </button>
+    <button class="rail-btn" data-view="plans" data-tip="PLANS">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    </button>
+    <button class="rail-btn" data-view="memory" data-tip="MEMORY">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a3 3 0 0 0-3 3v1a3 3 0 0 0-3 3 3 3 0 0 0 3 3h6a3 3 0 0 0 3-3 3 3 0 0 0-3-3V6a3 3 0 0 0-3-3z"/><path d="M6 13a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-2a3 3 0 0 0-3-3"/></svg>
+    </button>
+    <button class="rail-btn" data-view="tools" data-tip="TOOLS">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+    </button>
+    <button class="rail-btn" data-view="settings" data-tip="SETTINGS">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.08a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.08a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.08a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+    <button class="rail-btn" data-view="diag" data-tip="DIAGNOSTICS">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    </button>
+    <div class="rail-sep"></div>
+    <button class="rail-btn" id="rail-voice" data-tip="JARVIS VOICE">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+    </button>
+  </nav>
+
+  <!-- CENTER STAGE -->
+  <main id="main">
+    <section id="stage">
+      <div id="halo"></div>
+
+      <div id="orb-zone">
+        <div id="orbit"></div>
+
+        <svg id="orb" viewBox="0 0 200 200">
+          <defs>
+            <linearGradient id="fireGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffb347"/>
+              <stop offset="1" stop-color="#ff3b1f"/>
+            </linearGradient>
+            <linearGradient id="iceGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#19d3ff"/>
+              <stop offset="1" stop-color="#7f7bff"/>
+            </linearGradient>
+            <linearGradient id="splitGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#ff6a3c"/>
+              <stop offset=".5" stop-color="#d4af37"/>
+              <stop offset="1" stop-color="#19d3ff"/>
+            </linearGradient>
+          </defs>
+          <circle class="em-ring" cx="100" cy="100" r="92" fill="none" stroke="url(#splitGrad)" stroke-width="1.4"/>
+          <path d="M62 58 L70 34 L84 48 L100 26 L116 48 L130 34 L138 58" fill="none" stroke="url(#splitGrad)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M100 42 L148 66 L148 122 L100 146 L52 122 L52 66 Z" fill="rgba(8,12,26,.55)" stroke="url(#splitGrad)" stroke-width="3" stroke-linejoin="round"/>
+          <g stroke="url(#fireGrad)" stroke-width="2" opacity=".92">
+            <line x1="68" y1="72" x2="68" y2="118"/>
+            <line x1="80" y1="66" x2="80" y2="124"/>
+            <line x1="92" y1="62" x2="92" y2="128"/>
+          </g>
+          <g stroke="url(#iceGrad)" stroke-width="2" opacity=".92">
+            <line x1="108" y1="62" x2="108" y2="128"/>
+            <line x1="120" y1="66" x2="120" y2="124"/>
+            <line x1="132" y1="72" x2="132" y2="118"/>
+          </g>
+          <circle class="em-core" cx="100" cy="88" r="9" fill="url(#splitGrad)"/>
+          <path d="M78 138 L100 158 L122 138" fill="none" stroke="url(#splitGrad)" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+
+        <div id="orb-status"><b>ROLEX</b> &#183; STANDBY &#183; <em>HEY GURU TO WAKE</em></div>
+        <div id="wave"></div>
+      </div>
+
+      <!-- center console -->
+      <div id="console">
+        <div id="stream"></div>
+        <div id="composer">
+          <input id="input" type="text" autocomplete="off" spellcheck="false"
+                 placeholder="Ask Rolex anything&#8230; (math, tasks, weather, plans, memory)">
+          <button id="btn-mic" title="Voice input">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <button id="btn-send" title="Send">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+        <div class="quick">
+          <button data-q="2+2*10^3">QUICK MATH</button>
+          <button data-q="show my tasks">TASKS</button>
+          <button data-q="chennai la weather enna">WEATHER</button>
+          <button data-q="make a plan for ooty trip">PLANS</button>
+          <button data-q="recall my bike">MEMORY</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RIGHT DOCK -->
+  <aside id="dock">
+    <div class="glass" id="telemetry">
+      <h3>CORE TELEMETRY</h3>
+      <div class="trow"><span>state</span><b id="t-state" class="gold">listening</b></div>
+      <div class="trow"><span>uptime</span><b id="t-uptime">0s</b></div>
+      <div class="trow"><span>turns</span><b id="t-turns">0</b></div>
+      <div class="trow"><span>routes</span><b id="t-routes">&#8212;</b></div>
+      <div class="trow"><span>local %</span><b id="t-localpct" class="gold">100%</b></div>
+      <div class="meter"><i id="t-meter"></i></div>
+      <div class="trow"><span>last answer</span><b id="t-last">&#8212;</b></div>
+      <div class="trow"><span>speed</span><b id="t-speed">&#8212;</b></div>
+      <div class="trow"><span>voice</span><b id="t-voice" class="gold">JARVIS</b></div>
+      <div class="trow"><span>rate / pitch</span><b><span id="t-vrate">158</span> / <span id="t-vpitch">30</span></b></div>
+    </div>
+
+    <div class="glass">
+      <h3>MODULE STATUS</h3>
+      <div id="mod-grid"></div>
+    </div>
+
+    <div class="glass smviz">
+      <h3>SMART HOME VIZ</h3>
+      <div class="srow"><span>devices</span><b id="t-sm-count">0</b></div>
+      <div class="srow"><span>hub</span><b id="t-sm-hub">VI2</b></div>
+      <div class="srow"><span>last action</span><b id="t-sm-last">&#8212;</b></div>
+      <div class="srow"><span>danger lock</span><b class="armed">&#128274; ARMED</b></div>
+    </div>
+  </aside>
+</div>
+
+<!-- ============ FLOATING WINDOWS ============ -->
+<div id="views">
+  <div class="win" id="view-chat"><div class="winbody"></div></div>
+
+  <div class="win" id="view-dash">
+    <div class="winhead"><h2>DASHBOARD</h2><button class="wclose">&#10005;</button></div>
+    <div class="winbody">
+      <div class="statgrid">
+        <div class="stat"><b id="d-todos">0</b><span>TODOS</span></div>
+        <div class="stat"><b id="d-mem">0</b><span>MEMORIES</span></div>
+        <div class="stat"><b id="d-kb">0</b><span>KB</span></div>
+        <div class="stat"><b id="d-plans">0</b><span>PLANS</span></div>
+      </div>
+      <h3 class="sub" style="letter-spacing:.2em">TASKS</h3>
+      <div id="d-tasklist"></div>
+      <h3 class="sub" style="letter-spacing:.2em;margin-top:12px">MEMORY</h3>
+      <div id="d-memlist"></div>
+      <h3 class="sub" style="letter-spacing:.2em;margin-top:12px">REMINDERS</h3>
+      <div id="d-reminders"></div>
+      <h3 class="sub" style="letter-spacing:.2em;margin-top:12px">MODULES</h3>
+      <div id="d-modgrid"></div>
+    </div>
+  </div>
+
+  <div class="win" id="view-plans">
+    <div class="winhead"><h2>PLANS</h2><button class="wclose">&#10005;</button></div>
+    <div class="winbody">
+      <div class="mini-add">
+        <input class="setin" id="plan-input" type="text" placeholder="make a plan for &#8230;">
+        <button class="setbtn keybtn" id="plan-btn">PLAN</button>
+      </div>
+      <div id="plan-list"></div>
+    </div>
+  </div>
+
+  <div class="win" id="view-memory">
+    <div class="winhead"><h2>MEMORY</h2><button class="wclose">&#10005;</button></div>
+    <div class="winbody">
+      <div class="mini-add">
+        <input class="setin" id="mem-input" type="text" placeholder="remember that &#8230;">
+        <button class="setbtn keybtn" id="mem-btn">SAVE</button>
+      </div>
+      <div id="mem-list"></div>
+    </div>
+  </div>
+
+  <div class="win" id="view-tools">
+    <div class="winhead"><h2>TOOLS &#183; 16 MODULES</h2><button class="wclose">&#10005;</button></div>
+    <div class="winbody"><div id="cap-list"></div></div>
+  </div>
+
+  <div class="win" id="view-settings">
+    <div class="winhead"><h2>SETTINGS</h2><button class="wclose">&#10005;</button></div>
+    <div class="winbody">
+      <div class="setrow">
+        <div class="setlabel"><b>Jarvis Voice Profile</b><span>&#167;12 modulation &#183; rate / pitch / volume</span></div>
+        <select class="setsel" id="set-voice">
+          <option value="jarvis">JARVIS</option>
+          <option value="assistant">ASSISTANT</option>
+          <option value="narrator">NARRATOR</option>
+        </select>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>Speak Replies</b><span>Rolex voice-la reply sollum</span></div>
+        <div class="toggle" id="set-speak"></div>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>Bass Glow</b><span>voice bass ku thagundha center glow &#183; &#9834;</span></div>
+        <div class="toggle on" id="set-bass"></div>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>Local-First Mode</b><span>&#183; external AI last resort</span></div>
+        <div class="toggle on" id="set-localfirst"></div>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>Danger Lock</b><span>&#167;30 smart-home unsafe actions gate</span></div>
+        <div class="toggle on" id="set-dangerlock"></div>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>Language</b><span>Tanglish / English</span></div>
+        <select class="setsel" id="set-lang">
+          <option value="tanglish">TANGLISH</option>
+          <option value="english">ENGLISH</option>
+        </select>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>Serper API Key</b><span>&#167;6.1 web search &#183; optional</span></div>
+        <input class="setin" id="set-serper" type="password" placeholder="paste key &#8230;">
+        <button class="setbtn keybtn" id="set-serper-save">SAVE</button>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>Tavily API Key</b><span>&#167;6.1 web search backup &#183; optional</span></div>
+        <input class="setin" id="set-tavily" type="password" placeholder="paste key &#8230;">
+        <button class="setbtn keybtn" id="set-tavily-save">SAVE</button>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>OpenWeather API Key</b><span>&#167;6 weather upgrade &#183; optional</span></div>
+        <input class="setin" id="set-openweather" type="password" placeholder="paste key &#8230;">
+        <button class="setbtn keybtn" id="set-openweather-save">SAVE</button>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>ElevenLabs API Key</b><span>&#167;12 premium voice &#183; optional</span></div>
+        <input class="setin" id="set-elevenlabs" type="password" placeholder="paste key &#8230;">
+        <button class="setbtn keybtn" id="set-elevenlabs-save">SAVE</button>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>Gemini API Key</b><span>AI intelligence source &#183; optional</span></div>
+        <input class="setin" id="set-gemini" type="password" placeholder="paste key &#8230;">
+        <button class="setbtn keybtn" id="set-gemini-save">SAVE</button>
+      </div>
+      <div class="setrow">
+        <div class="setlabel"><b>OpenAI API Key</b><span>AI intelligence source &#183; optional</span></div>
+        <input class="setin" id="set-openai" type="password" placeholder="paste key &#8230;">
+        <button class="setbtn keybtn" id="set-openai-save">SAVE</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="win" id="view-diag">
+    <div class="winhead"><h2>DIAGNOSTICS</h2><button class="wclose">&#10005;</button></div>
+    <div class="winbody">
+      <div id="diag-pills"></div>
+      <div id="diaglog-body"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<script src="rolex.js"></script>
+</body>
+</html>

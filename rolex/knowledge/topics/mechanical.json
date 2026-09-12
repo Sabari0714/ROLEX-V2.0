@@ -1,0 +1,58 @@
+{
+  "topic": "mechanical",
+  "entries": [
+    {
+      "id": "torque",
+      "title": "Torque",
+      "keywords": ["torque", "nm", "moment", "rotational force"],
+      "tags": ["mechanical", "basics"],
+      "formula": "T = F × r (N·m)",
+      "content": "Torque is rotational force: T = Force × perpendicular distance. Unit N·m (1 kg·m ≈ 9.81 N·m). Motor torque: T = P/ω where ω = 2π×RPM/60. A 1 HP motor at 3000 RPM gives about 2.4 N·m.",
+      "related": ["power_hp", "gear"]
+    },
+    {
+      "id": "gear",
+      "title": "Gears & Gear Ratio",
+      "keywords": ["gear", "gear ratio", "teeth", "speed reduction", "gearbox"],
+      "tags": ["mechanical", "machine"],
+      "formula": "Ratio = N_driven / N_driver",
+      "content": "Gears transmit rotation between shafts. Gear ratio = driven teeth / driver teeth. Ratio > 1 reduces speed and multiplies torque (e.g., 20T→40T halves RPM, doubles torque). Types: spur, helical (quiet), bevel (90°), worm (high reduction, self-locking), rack & pinion (rotary→linear).",
+      "related": ["torque", "pulley"]
+    },
+    {
+      "id": "pulley",
+      "title": "Pulleys & Belts",
+      "keywords": ["pulley", "belt", "belt drive", "pulley ratio"],
+      "tags": ["mechanical", "machine"],
+      "formula": "N1×D1 = N2×D2",
+      "content": "Belt drives connect shafts via pulleys. Speed relation: N1×D1 = N2×D2 (RPM × diameter). A 100mm driver at 1200 RPM with a 200mm driven pulley gives 600 RPM. Belt types: flat, V-belt (most common), timing belt (positive grip, no slip). Belt speed = π×D×N/60.",
+      "related": ["gear"]
+    },
+    {
+      "id": "bearing",
+      "title": "Bearings",
+      "keywords": ["bearing", "ball bearing", "roller bearing", "friction"],
+      "tags": ["mechanical", "component"],
+      "content": "Bearings reduce friction between rotating parts. Ball bearings: high speed, moderate load (6203, 6205 common codes). Roller/taper: heavy load, radial+axial. Sleeve/bush: cheap, quiet, low speed. Lubrication (grease/oil) is essential — wrong fit or no grease is the top bearing killer.",
+      "related": []
+    },
+    {
+      "id": "stress_strain",
+      "title": "Stress & Strain",
+      "keywords": ["stress", "strain", "youngs modulus", "yield strength", "tensile"],
+      "tags": ["mechanical", "material"],
+      "formula": "Stress = F/A (MPa), Strain = ΔL/L",
+      "content": "Stress σ = Force/Area (N/mm² = MPa). Strain ε = extension/original length (dimensionless). Hooke's Law: σ = E×ε, where E = Young's Modulus (steel ~200 GPa, aluminium ~70 GPa). Yield strength = stress where permanent deformation begins; ultimate tensile strength = max before breaking.",
+      "related": []
+    },
+    {
+      "id": "hydraulics_pneumatics",
+      "title": "Hydraulics & Pneumatics",
+      "keywords": ["hydraulic", "pneumatic", "fluid power", "cylinder pressure"],
+      "tags": ["mechanical", "fluid"],
+      "formula": "F = P × A",
+      "content": "Fluid power uses pressurized fluid to do work. Hydraulics: liquid (oil), high force, pressures 70–700 bar, used in JCBs, presses. Pneumatics: air, fast & clean, 6–10 bar, used in automation. Cylinder force F = Pressure × Piston area. Pascal's law: pressure applied to enclosed fluid transmits equally in all directions.",
+      "related": []
+    }
+  ]
+}

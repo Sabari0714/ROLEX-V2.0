@@ -1,0 +1,53 @@
+{
+  "topic": "civil",
+  "entries": [
+    {
+      "id": "concrete_grades",
+      "title": "Concrete Grades",
+      "keywords": ["concrete", "concrete grade", "m20", "m25", "cement mix", "ratio"],
+      "tags": ["civil", "material"],
+      "content": "Concrete grade M20 means 20 N/mm² characteristic strength at 28 days. Nominal mixes: M10 (1:3:6), M15 (1:2:4), M20 (1:1.5:3), M25 (1:1:2) — cement:sand:aggregate. M20+ is minimum for RCC work. Curing (keeping it moist) for at least 7 days is essential for strength.",
+      "related": ["cement_types"]
+    },
+    {
+      "id": "cement_types",
+      "title": "Cement Types (OPC/PPC)",
+      "keywords": ["cement", "opc", "ppc", "cement grade", "53 grade"],
+      "tags": ["civil", "material"],
+      "content": "OPC (Ordinary Portland Cement): 33/43/53 grades — faster strength gain, good for RCC and precast. PPC (Portland Pozzolana): fly-ash blended — better durability, lower heat, cheaper, better for plastering/masonry. Storage: use within 3 months; hard lumps mean it's partly dead.",
+      "related": ["concrete_grades"]
+    },
+    {
+      "id": "brick_masonry",
+      "title": "Bricks & Masonry",
+      "keywords": ["brick", "masonry", "brick size", "burnt clay brick"],
+      "tags": ["civil", "material"],
+      "content": "Standard burnt-clay brick (India): 190 × 90 × 90 mm. Good brick: uniform color, ring sound when struck, water absorption < 20%, compressive strength ≥ 3.5 N/mm². Masonry bonds: stretcher, header, English, Flemish. Mortar commonly 1:6 (cement:sand) for walls.",
+      "related": ["cement_types"]
+    },
+    {
+      "id": "steel_reinforcement",
+      "title": "Steel Reinforcement (Rebar)",
+      "keywords": ["rebar", "reinforcement steel", "tmt", "fe415", "fe500", "steel rod"],
+      "tags": ["civil", "material"],
+      "content": "TMT (Thermo-Mechanically Treated) bars are the standard RCC reinforcement. Grades: Fe415, Fe500, Fe550 (yield strength N/mm²). Fe415 is more ductile (good for seismic zones), Fe500 saves steel for columns. Standard lengths 12 m. Cover blocks keep 20–50 mm concrete cover to prevent rusting.",
+      "related": ["concrete_grades"]
+    },
+    {
+      "id": "slump_test",
+      "title": "Slump Test",
+      "keywords": ["slump test", "workability", "concrete test", "slump cone"],
+      "tags": ["civil", "test"],
+      "content": "The slump test checks concrete workability on site. Fill the standard cone (300mm tall, 100mm top, 200mm base) in 4 layers, rodding 25 times each; lift and measure the drop. Slump 25–100 mm typical for RCC; very low = stiff mix, very high (>150) or collapsed = too wet or segregation.",
+      "related": ["concrete_grades"]
+    },
+    {
+      "id": "building_loads",
+      "title": "Types of Building Loads",
+      "keywords": ["load types", "dead load", "live load", "wind load", "seismic"],
+      "tags": ["civil", "structure"],
+      "content": "Dead load: self-weight of structure (concrete 24 kN/m³, brick 19-20 kN/m³). Live load: occupants, furniture (residential ~2 kN/m², offices ~2.5–4). Wind load: lateral pressure on tall buildings. Seismic load: earthquake forces (India zones II–V, IS 1893). Design combines these with safety factors.",
+      "related": []
+    }
+  ]
+}

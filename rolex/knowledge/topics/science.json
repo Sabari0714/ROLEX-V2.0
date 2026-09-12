@@ -1,0 +1,55 @@
+{
+  "topic": "science",
+  "entries": [
+    {
+      "id": "newtons_laws",
+      "title": "Newton's Three Laws of Motion",
+      "keywords": ["newton laws", "newtons laws", "law of motion", "inertia", "f=ma"],
+      "tags": ["science", "physics"],
+      "content": "1st (Inertia): objects keep their state of rest/motion unless a net force acts. 2nd: F = m×a — force equals mass times acceleration (N = kg·m/s²). 3rd: every action has an equal and opposite reaction (rocket exhaust pushes ship forward). Foundation of classical mechanics.",
+      "related": ["gravity"]
+    },
+    {
+      "id": "gravity",
+      "title": "Gravity",
+      "keywords": ["gravity", "gravitational force", "g value", "weight mass"],
+      "tags": ["science", "physics"],
+      "formula": "F = G·m1·m2/r²",
+      "content": "Newton: every mass attracts every other — F = Gm1m2/r². On Earth, g = 9.81 m/s². Weight = m×g (force) vs Mass (amount of matter, constant everywhere). Your mass on the Moon is the same; weight drops to 1/6 because g_moon = 1.62 m/s². Einstein reframed gravity as spacetime curvature (General Relativity).",
+      "related": ["newtons_laws"]
+    },
+    {
+      "id": "electromagnetism",
+      "title": "Electromagnetism Basics",
+      "keywords": ["electromagnetism", "faraday", "magnetic field", "induction", "lenz"],
+      "tags": ["science", "physics"],
+      "content": "Moving charges create magnetic fields (electromagnets, motors) and changing magnetic fields create voltage (Faraday's induction — generators, transformers). Lenz's law: induced current opposes the change causing it (that's why back-EMF exists). Maxwell's equations unified electricity, magnetism and light — light IS electromagnetic radiation.",
+      "related": []
+    },
+    {
+      "id": "photosynthesis",
+      "title": "Photosynthesis",
+      "keywords": ["photosynthesis", "plants sunlight", "chlorophyll", "calvin cycle"],
+      "tags": ["science", "biology"],
+      "formula": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+      "content": "Plants convert CO₂ + water + light into glucose + oxygen using chlorophyll. Light reactions (in thylakoids) split water and make ATP/NADPH; the Calvin cycle (in stroma) fixes CO₂ into sugar. It powers nearly all food chains and produced Earth's oxygen atmosphere.",
+      "related": []
+    },
+    {
+      "id": "periodic_table",
+      "title": "Periodic Table Basics",
+      "keywords": ["periodic table", "elements", "atomic number", "groups periods"],
+      "tags": ["science", "chemistry"],
+      "content": "Elements are ordered by atomic number (proton count). Groups (columns) share chemical behavior — Group 1 alkali metals (reactive), Group 17 halogens, Group 18 noble gases (inert). Periods (rows) fill the same electron shell. Top essentials: H, C, N, O make ~96% of your body. Metals left/center; non-metals right.",
+      "related": []
+    },
+    {
+      "id": "states_matter",
+      "title": "States of Matter",
+      "keywords": ["states of matter", "solid liquid gas", "plasma", "phase change"],
+      "tags": ["science", "physics"],
+      "content": "Solid (fixed shape/volume, vibrating molecules), Liquid (fixed volume, flows), Gas (fills container, free molecules), Plasma (ionized gas — stars, neon signs). Transitions: melting/fusion, freezing, vaporization/boiling, condensation, sublimation (solid→gas, e.g., dry ice), deposition. Latent heat is absorbed/released during transitions without temperature change.",
+      "related": []
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "topic": "computer",
+  "entries": [
+    {
+      "id": "cpu",
+      "title": "CPU (Processor)",
+      "keywords": ["cpu", "processor", "core", "ghz", "brain of computer"],
+      "tags": ["computer", "hardware"],
+      "content": "The CPU executes program instructions. Cores = parallel processing units; threads = virtual cores (hyper-threading). Clock speed in GHz (billions of cycles/sec). Cache L1/L2/L3 gives fast access to hot data. x86 (Intel/AMD) dominates desktops; ARM dominates phones (efficiency-first design).",
+      "related": ["ram", "storage"]
+    },
+    {
+      "id": "ram",
+      "title": "RAM (Memory)",
+      "keywords": ["ram", "memory", "ddr", "memory vs storage"],
+      "tags": ["computer", "hardware"],
+      "content": "RAM is fast, temporary working memory — cleared on power off. DDR4/DDR5 are current generations (faster bus speeds). More RAM = more programs/processes held simultaneously. RAM (volatile, fast) vs Storage (non-volatile: SSD/HDD — holds data permanently). Typical: 8–16 GB RAM for a dev PC.",
+      "related": ["cpu", "storage"]
+    },
+    {
+      "id": "storage",
+      "title": "Storage: HDD vs SSD",
+      "keywords": ["ssd", "hdd", "storage", "nvme", "hard disk"],
+      "tags": ["computer", "hardware"],
+      "content": "HDD: spinning magnetic platters, cheap per GB (~₹2/GB), ~100-160 MB/s. SATA SSD: flash chips, no moving parts, ~550 MB/s. NVMe SSD: PCIe interface, 3000–7000 MB/s. Upgrade HDD→SSD is the single biggest speed boost for an old laptop. NAND flash has finite write cycles (TBW rating).",
+      "related": ["ram"]
+    },
+    {
+      "id": "osi_model",
+      "title": "OSI Model (7 Layers)",
+      "keywords": ["osi model", "osi layers", "network layers", "tcp ip"],
+      "tags": ["computer", "networking"],
+      "content": "OSI 7 layers: 7-Application (HTTP, user apps), 6-Presentation (encoding, TLS), 5-Session, 4-Transport (TCP/UDP, ports), 3-Network (IP, routers), 2-Data Link (MAC, switches), 1-Physical (cables, radio). Mnemonic: 'All People Seem To Need Data Processing'. TCP/IP is the practical 4-layer model used on the real internet.",
+      "related": ["http_dns"]
+    },
+    {
+      "id": "http_dns",
+      "title": "HTTP & DNS Basics",
+      "keywords": ["http", "https", "dns", "domain name", "get post"],
+      "tags": ["computer", "networking", "web"],
+      "content": "DNS translates domain names (google.com) to server IPs — the internet's phonebook. HTTP methods: GET (read), POST (create/submit), PUT (replace), DELETE. HTTPS = HTTP + TLS encryption (padlock). Status codes: 200 OK, 301 redirect, 404 not found, 500 server error. Ports: HTTP 80, HTTPS 443, DNS 53.",
+      "related": ["osi_model"]
+    },
+    {
+      "id": "git_basics",
+      "title": "Git Basics",
+      "keywords": ["git", "github", "version control", "commit", "branch", "merge"],
+      "tags": ["computer", "devtools"],
+      "content": "Git is distributed version control. Core flow: edit → git add (stage) → git commit (snapshot) → git push (upload to remote like GitHub). Branch = parallel line of work; merge = combine branches. git log shows history, git checkout/git switch changes branches, git clone downloads a repo. .gitignore excludes files from tracking.",
+      "related": []
+    },
+    {
+      "id": "python_basics",
+      "title": "Python Basics",
+      "keywords": ["python", "python basics", "list dict", "pip", "venv"],
+      "tags": ["computer", "programming"],
+      "content": "Python is a high-level, dynamically-typed language. Core types: list [1,2], dict {'k':v}, tuple (immutable), set (unique). venv creates isolated environments (python -m venv .venv); pip installs packages (pip install requests). Zen of Python: 'import this' — Readability counts. Runs everywhere; the #1 language for AI/automation.",
+      "related": ["git_basics"]
+    },
+    {
+      "id": "linux_basics",
+      "title": "Linux Essential Commands",
+      "keywords": ["linux", "linux commands", "ls cd", "chmod", "shell basics"],
+      "tags": ["computer", "os", "linux"],
+      "content": "Everyday Linux: ls (list), cd (change dir), pwd (where am I), cp/mv/rm (copy/move/delete), mkdir, cat/less (view files), grep (search text), find (find files), chmod (permissions: r=4,w=2,x=1 → 755 = rwxr-xr-x), sudo (admin powers), apt/pip (install). Everything is a file — even devices (/dev).",
+      "related": []
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+# Rolex — Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+
+# Rolex runtime data
+data/
+*.log
+*.db
+*.sqlite3
+
+# Secrets
+.env
+
+# Android / Buildozer
+android/.buildozer/
+android/bin/
+*.apk
+*.aar
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Old reference (kept only for reading, never imported)
+reference_old/

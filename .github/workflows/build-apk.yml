@@ -1,0 +1,94 @@
+# ROLEX AI v2.2.0 — CI + Android APK build pipeline
+# Push a tag like v2.2.0 to build the APK, or run manually via workflow_dispatch.
+name: ROLEX CI + APK
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ "v*" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test suite (267 tests)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run full pytest suite
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          python -m pytest tests/ -q
+      - name: Self-test verdict (HEALTHY/DEGRADED only)
+        run: |
+          python - <<'PY'
+          import sys; sys.path.insert(0, ".")
+          from rolex.security import run_self_test
+          r = run_self_test()
+          print("SELF-TEST:", r["verdict"], r["score"])
+          assert r["verdict"] in ("HEALTHY", "DEGRADED")
+          PY
+
+  build:
+    needs: test
+    name: Build Android APK (debug)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies (Buildozer needs these)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            git zip unzip openjdk-17-jdk autoconf libtool pkg-config \
+            zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 \
+            cmake libffi-dev libssl-dev
+          java -version
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip wheel
+          pip install "buildozer==1.5.0" "cython==0.29.33"
+
+      - name: Verify project imports before building
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, ".")
+          import rolex
+          from rolex.assistant import get_assistant
+          from rolex.ui import text_cockpit, COLORS, KIVY
+          from rolex.security import run_self_test
+          print("ROLEX import check OK · KIVY:", KIVY)
+          report = run_self_test()
+          print("SELF-TEST:", report["verdict"], report["score"])
+          assert report["verdict"] in ("HEALTHY", "DEGRADED"), "self-test failed — refusing to build APK"
+          PY
+
+      - name: Buildozer android debug
+        run: buildozer -v android debug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rolex-ai-debug-apk
+          path: bin/*.apk
+          if-no-files-found: error
+
+      - name: (Tags only) Attach APK to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: bin/*.apk

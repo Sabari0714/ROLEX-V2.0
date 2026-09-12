@@ -1,0 +1,70 @@
+{
+  "topic": "electronics",
+  "entries": [
+    {
+      "id": "resistor",
+      "title": "Resistor",
+      "keywords": ["resistor", "resistance", "color code", "colour code", "ohm resistor"],
+      "tags": ["electronics", "component"],
+      "content": "A resistor limits current and divides voltage. Color bands give value: e.g., Brown-Black-Red-Gold = 1kΩ ±5%. Standard series E12: 1, 1.2, 1.5, 1.8, 2.2, 2.7, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2. Power ratings 1/4W, 1/2W, 1W — always use at least 2× dissipation margin.",
+      "related": ["capacitor", "led"]
+    },
+    {
+      "id": "capacitor",
+      "title": "Capacitor",
+      "keywords": ["capacitor", "farad", "capacitance", "charging"],
+      "tags": ["electronics", "component"],
+      "formula": "Q = C × V, τ = R×C",
+      "content": "A capacitor stores charge between two plates. Q = CV. Blocks DC, passes AC. RC time constant τ = RC — charges to 63% in one τ, ~99% in 5τ. Types: ceramic (small pF-nF), electrolytic (µF, polarized), tantalum. Used for filtering, coupling, timing, decoupling.",
+      "related": ["resistor", "inductor"]
+    },
+    {
+      "id": "inductor",
+      "title": "Inductor",
+      "keywords": ["inductor", "coil", "henry", "inductance", "choke"],
+      "tags": ["electronics", "component"],
+      "content": "An inductor stores energy in a magnetic field when current flows through a coil. V = L(di/dt). It opposes sudden current changes — passes DC, blocks AC. Unit: Henry (H). Used in filters, transformers, SMPS, RF tuned circuits (LC resonance f = 1/(2π√LC)).",
+      "related": ["capacitor"]
+    },
+    {
+      "id": "diode",
+      "title": "Diode",
+      "keywords": ["diode", "pn junction", "rectifier", "forward voltage"],
+      "tags": ["electronics", "component"],
+      "content": "A diode allows current one way only. Forward voltage: silicon ~0.7V, germanium ~0.3V, Schottky ~0.3V. Applications: rectification (AC→DC), protection, signal demodulation. Zener diode conducts in reverse at its breakdown voltage — used as a voltage reference/regulator.",
+      "related": ["transistor", "led"]
+    },
+    {
+      "id": "led",
+      "title": "LED",
+      "keywords": ["led", "light emitting diode", "led resistor", "led voltage"],
+      "tags": ["electronics", "component"],
+      "content": "LED converts current to light. Forward voltage Vf: red ~1.8-2.0V, green/yellow ~2.0-2.2V, blue/white ~3.0-3.4V. Typical current 20 mA. Always use a series resistor: R = (Vs − Vf)/I. Example: 5V supply, red LED → (5−2)/0.02 = 150Ω → use 150-220Ω.",
+      "related": ["diode", "resistor"]
+    },
+    {
+      "id": "transistor",
+      "title": "Transistor",
+      "keywords": ["transistor", "bjt", "mosfet", "amplifier", "switch"],
+      "tags": ["electronics", "component"],
+      "content": "A transistor is a current/voltage controlled switch and amplifier. BJT (NPN/PNP): current-driven, Ic = β×Ib (β ~100). MOSFET: voltage-driven, very high input impedance, ideal for switching/power electronics. Package examples: BC547 (small signal NPN), IRFZ44N (power N-MOSFET). Legs: Base/Collector/Emitter (BJT), Gate/Drain/Source (MOSFET).",
+      "related": ["diode"]
+    },
+    {
+      "id": "logic_gates",
+      "title": "Logic Gates",
+      "keywords": ["logic gate", "and or not", "nand", "xor", "digital logic"],
+      "tags": ["electronics", "digital"],
+      "content": "Logic gates process binary signals. AND (1 only if both 1), OR (1 if any 1), NOT (invert), NAND = AND+NOT (universal gate), NOR (universal), XOR (1 if inputs differ). CMOS ICs: 4000 series, 74HC00 (NAND), 74HC08 (AND). All digital computers are built from these.",
+      "related": ["microcontroller"]
+    },
+    {
+      "id": "microcontroller",
+      "title": "Microcontroller vs Microprocessor",
+      "keywords": ["microcontroller", "microprocessor", "mcu", "mpu", "arduino", "embedded"],
+      "tags": ["electronics", "computer", "embedded"],
+      "content": "Microcontroller (MCU): CPU + RAM + Flash + I/O on one chip — runs one program, e.g., 8051, ATmega328 (Arduino Uno), ESP32, STM32. Microprocessor (MPU): CPU only, needs external RAM/storage/IO — runs full OS, e.g., Intel/AMD, ARM Cortex-A (Raspberry Pi). MCUs suit real-time control; MPUs suit general computing.",
+      "related": ["logic_gates"]
+    }
+  ]
+}

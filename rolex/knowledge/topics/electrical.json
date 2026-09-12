@@ -1,0 +1,73 @@
+{
+  "topic": "electrical",
+  "entries": [
+    {
+      "id": "ohms_law",
+      "title": "Ohm's Law",
+      "keywords": ["ohms law", "ohm law", "v=ir", "voltage current resistance", "ohm"],
+      "tags": ["electrical", "law", "basics"],
+      "formula": "V = I × R",
+      "content": "Ohm's Law states that voltage across a conductor equals current times resistance. V = I×R, I = V/R, R = V/I. Example: 12V across 6Ω draws 2A. It is the foundation of circuit analysis. Units: Volt (V), Ampere (A), Ohm (Ω). Note: applies to ohmic (linear) conductors at constant temperature.",
+      "related": ["kirchhoff_laws", "electrical_power"]
+    },
+    {
+      "id": "electrical_power",
+      "title": "Electrical Power",
+      "keywords": ["power", "watt", "p=vi", "p=i2r", "electrical power"],
+      "tags": ["electrical", "power"],
+      "formula": "P = V × I = I² × R = V²/R",
+      "content": "Electrical power is the rate of energy transfer. P = V×I (watts). Also P = I²R and P = V²/R. 1 kW running 1 hour = 1 unit (kWh) of electricity. Energy in kWh = Power(W) × hours / 1000.",
+      "related": ["ohms_law", "energy_units"]
+    },
+    {
+      "id": "kirchhoff_laws",
+      "title": "Kirchhoff's Laws",
+      "keywords": ["kirchhoff", "kcl", "kvl", "current law", "voltage law"],
+      "tags": ["electrical", "law", "circuit"],
+      "content": "KCL (Current Law): sum of currents entering a node equals sum leaving — charge is conserved. KVL (Voltage Law): sum of voltages around any closed loop is zero — energy is conserved. Together they solve any resistive network.",
+      "related": ["ohms_law"]
+    },
+    {
+      "id": "ac_dc",
+      "title": "AC vs DC",
+      "keywords": ["ac", "dc", "alternating current", "direct current", "ac vs dc"],
+      "tags": ["electrical", "basics"],
+      "content": "DC (Direct Current) flows in one direction — batteries, USB, electronics. AC (Alternating Current) reverses direction periodically — grid supply (50Hz in India, 60Hz in USA). AC is used for transmission because transformers step voltage up/down easily, reducing line losses.",
+      "related": ["transformer"]
+    },
+    {
+      "id": "transformer",
+      "title": "Transformer",
+      "keywords": ["transformer", "step up", "step down", "turns ratio"],
+      "tags": ["electrical", "machine"],
+      "formula": "Vs/Vp = Ns/Np",
+      "content": "A transformer transfers AC energy between circuits via electromagnetic induction, with no moving parts. Step-up increases voltage (Ns > Np), step-down decreases it. Vs/Vp = Ns/Np = Ip/Is (inverse for current). Works only with AC.",
+      "related": ["ac_dc"]
+    },
+    {
+      "id": "power_factor",
+      "title": "Power Factor",
+      "keywords": ["power factor", "pf", "kva", "kw kva"],
+      "tags": ["electrical", "power"],
+      "formula": "PF = kW / kVA = cos(φ)",
+      "content": "Power factor is the ratio of real power (kW) to apparent power (kVA), equal to cos(φ) of the phase angle. PF = 1 is ideal (pure resistive). Inductive loads (motors) lower the PF; capacitor banks correct it. Low PF means higher current for the same useful power — utilities penalize it.",
+      "related": ["electrical_power"]
+    },
+    {
+      "id": "earthing",
+      "title": "Earthing / Grounding",
+      "keywords": ["earthing", "grounding", "earth wire", "shock protection"],
+      "tags": ["electrical", "safety"],
+      "content": "Earthing connects electrical installations to the ground so fault current safely flows to earth, tripping protective devices. Types: plate earthing, pipe earthing, rod earthing. Typical residential earth resistance should be below 5 Ω. It protects humans from electric shock and equipment from surge damage.",
+      "related": ["circuit_breaker"]
+    },
+    {
+      "id": "circuit_breaker",
+      "title": "Circuit Breaker & Fuse",
+      "keywords": ["circuit breaker", "mcb", "fuse", "trip", "protection"],
+      "tags": ["electrical", "safety"],
+      "content": "A circuit breaker automatically interrupts a circuit on overload/short-circuit and can be reset; a fuse melts once and must be replaced. MCB (Miniature Circuit Breaker) ratings: 6A lighting, 16A/20A power sockets typical homes. ELCB/RCD detects earth leakage (30 mA trip) and saves lives.",
+      "related": ["earthing"]
+    }
+  ]
+}

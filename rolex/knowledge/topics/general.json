@@ -1,0 +1,174 @@
+{
+  "topic": "general",
+  "entries": [
+    {
+      "id": "tamil_language",
+      "title": "Tamil Language",
+      "keywords": [
+        "tamil",
+        "tamil language",
+        "oldest language",
+        "dravidian",
+        "sangam"
+      ],
+      "tags": [
+        "general",
+        "language",
+        "culture"
+      ],
+      "content": "Tamil is a classical Dravidian language with 2000+ years of recorded literature (Sangam era). Official language of Tamil Nadu & Puducherry, Sri Lanka and Singapore. Oldest living language with rich literature tradition.",
+      "related": [
+        "indian_culture"
+      ]
+    },
+    {
+      "id": "tanglish",
+      "title": "Tanglish",
+      "keywords": [
+        "tanglish",
+        "tamil english mix",
+        "romanized tamil",
+        "spoken tamil"
+      ],
+      "tags": [
+        "general",
+        "language"
+      ],
+      "content": "Tanglish is Tamil written in Roman/English letters mixed with English words, common in everyday speech in Tamil Nadu. Example: 'Enna venum?' means 'What do you want?'. Rolex understands Tamil, English, and Tanglish.",
+      "related": [
+        "tamil_language"
+      ]
+    },
+    {
+      "id": "rolex_identity",
+      "title": "Rolex AI Identity",
+      "keywords": [
+        "rolex",
+        "who are you",
+        "rolex ai",
+        "your name",
+        "what are you"
+      ],
+      "tags": [
+        "general",
+        "identity"
+      ],
+      "content": "Rolex is a personal AI assistant built in Python. Codename ROLEX, wake word 'Hey Guru'. Rolex calculates locally (math, engineering), searches a local knowledge base, and uses external AI providers (OpenAI, Gemini, Ollama) only as intelligence sources - the final answer is always composed and owned by Rolex itself.",
+      "related": [
+        "rolex_architecture"
+      ]
+    },
+    {
+      "id": "rolex_architecture",
+      "title": "Rolex Architecture",
+      "keywords": [
+        "rolex architecture",
+        "how rolex works",
+        "rolex modules",
+        "rolex design"
+      ],
+      "tags": [
+        "general",
+        "architecture"
+      ],
+      "content": "Flow: USER -> ROLEX CORE -> INTENT ROUTER -> (LOCAL BRAIN / TOOLS & ACTIONS / KNOWLEDGE) -> INTELLIGENCE HUB (parallel: OpenAI, Gemini, Ollama) -> VALIDATOR -> ROLEX FINAL ANSWER -> MEMORY & LEARNING -> USER. Math questions never go to AI: User -> Math Detector -> ROLEX LOCAL CALCULATOR -> Validate -> Exact Answer.",
+      "related": [
+        "rolex_identity"
+      ]
+    },
+    {
+      "id": "indian_currency",
+      "title": "Indian Rupee & Units",
+      "keywords": [
+        "rupee",
+        "indian currency",
+        "lakh",
+        "crore",
+        "rs",
+        "inr"
+      ],
+      "tags": [
+        "general",
+        "finance"
+      ],
+      "content": "Indian currency is the Rupee (INR, symbol Rs or ₹). Indian numbering: 1 lakh = 100,000; 1 crore = 10,000,000. Electricity in Tamil Nadu is commonly billed per unit (1 kWh); domestic rate around ₹8 per unit.",
+      "related": [
+        "electrical_energy"
+      ]
+    },
+    {
+      "id": "time_zones_india",
+      "title": "Indian Standard Time",
+      "keywords": [
+        "ist",
+        "indian time",
+        "time zone india",
+        "standard time"
+      ],
+      "tags": [
+        "general",
+        "time"
+      ],
+      "content": "Indian Standard Time (IST) is UTC+5:30. India has no daylight saving time. IST is used across the entire country.",
+      "related": []
+    },
+    {
+      "id": "metric_prefixes",
+      "title": "Metric Prefixes",
+      "keywords": [
+        "kilo",
+        "mega",
+        "milli",
+        "micro",
+        "nano",
+        "prefix",
+        "metric prefixes",
+        "si prefixes"
+      ],
+      "tags": [
+        "general",
+        "units"
+      ],
+      "content": "SI prefixes: kilo (k) = 10^3, mega (M) = 10^6, giga (G) = 10^9, tera (T) = 10^12, milli (m) = 10^-3, micro (µ) = 10^-6, nano (n) = 10^-9, pico (p) = 10^-12. 1 kVA = 1000 VA, 1 mA = 0.001 A.",
+      "related": [
+        "unit_conversion"
+      ]
+    },
+    {
+      "id": "solar_system",
+      "title": "Solar System Planets",
+      "keywords": [
+        "solar system",
+        "planets",
+        "planet order",
+        "mercury",
+        "earth",
+        "jupiter"
+      ],
+      "tags": [
+        "general",
+        "space",
+        "astronomy"
+      ],
+      "content": "The Solar System has 8 planets orbiting the Sun. Order from the Sun: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune. Inner planets (Mercury-Mars) are rocky; outer planets (Jupiter-Neptune) are gas/ice giants. Pluto was reclassified as a dwarf planet in 2006.",
+      "related": []
+    },
+    {
+      "id": "study_tips",
+      "title": "Effective Study Techniques",
+      "keywords": [
+        "study tips",
+        "how to study",
+        "learning techniques",
+        "exam preparation",
+        "memory techniques"
+      ],
+      "tags": [
+        "general",
+        "education"
+      ],
+      "content": "Effective study techniques: spaced repetition (revisit material at increasing intervals), active recall (test yourself instead of re-reading), the Feynman technique (explain the concept simply as if teaching), and Pomodoro (25 minutes focused work + 5 minute break). Sleep consolidates memory - 7-8 hours before exams beats all-night cramming.",
+      "related": []
+    }
+  ]
+}
