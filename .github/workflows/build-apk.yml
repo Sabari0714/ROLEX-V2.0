@@ -57,11 +57,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             git zip unzip openjdk-17-jdk python3-pip python3-virtualenv \
-            autoconf libtool pkg-config zlib1g-dev libncurses5-dev \
-            libncursesw5-dev libtinfo6 cmake libffi-dev libssl-dev \
-            automake autopoint gettext poppler-utils
+            autoconf automake autopoint libtool libtool-bin libltdl-dev \
+            pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev \
+            libtinfo6 cmake libffi-dev libssl-dev gettext poppler-utils
           java -version
           pdftotext -v
+          # libffi's p4a recipe runs autoreconf and requires the libtool
+          # libltdl macros, including LT_SYS_SYMBOL_USCORE.
+          test -f /usr/share/aclocal/libtool.m4
+          grep -R "LT_SYS_SYMBOL_USCORE" /usr/share/aclocal /usr/share/libtool 2>/dev/null | head -n 5 || true
 
       - name: Install build tools
         run: |
