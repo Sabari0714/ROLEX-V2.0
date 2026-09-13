@@ -22,6 +22,12 @@ android.permissions = RECORD_AUDIO,CAMERA,INTERNET,POST_NOTIFICATIONS
 android.api = 34
 android.minapi = 24
 android.ndk = 25b
+android.ndk_api = 24
+
+# Pin python-for-android to the stable release that introduced Kivy 2.3.0
+# support. This avoids pulling an incompatible moving/develop toolchain.
+p4a.branch = v2024.01.21
+
 # Modern Android phones are arm64; keeping one ABI makes CI builds
 # smaller and avoids unnecessary legacy-ABI recipe compilation.
 android.archs = arm64-v8a
