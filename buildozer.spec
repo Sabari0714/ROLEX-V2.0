@@ -23,6 +23,7 @@ android.api = 34
 android.minapi = 24
 android.ndk = 25b
 android.ndk_api = 24
+android.accept_sdk_license = True
 
 # Pin python-for-android to the stable release that introduced Kivy 2.3.0
 # support. This avoids pulling an incompatible moving/develop toolchain.
