@@ -52,16 +52,18 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install system dependencies (Buildozer + PDF support)
+      - name: Install system dependencies (Buildozer + PDF + icon support)
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            git zip unzip openjdk-17-jdk python3-pip python3-virtualenv \
+            git curl zip unzip openjdk-17-jdk python3-pip python3-virtualenv \
             autoconf automake autopoint libtool libtool-bin libltdl-dev \
             pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev \
-            libtinfo6 cmake libffi-dev libssl-dev gettext poppler-utils
+            libtinfo6 cmake libffi-dev libssl-dev gettext poppler-utils \
+            librsvg2-bin
           java -version
           pdftotext -v
+          rsvg-convert --version
           # libffi's p4a recipe runs autoreconf and requires the libtool
           # libltdl macros, including LT_SYS_SYMBOL_USCORE.
           test -f /usr/share/aclocal/libtool.m4
@@ -73,6 +75,17 @@ jobs:
           pip install "buildozer==1.5.0" "cython==0.29.34"
           buildozer --version
           cython --version
+
+      - name: Prepare Autobot launcher icon
+        run: |
+          set -e
+          mkdir -p assets
+          curl -fL --retry 3 --retry-delay 2 \
+            "https://www.svgrepo.com/download/104313/autobots.svg" \
+            -o assets/autobots.svg
+          rsvg-convert -w 512 -h 512 assets/autobots.svg -o assets/icon.png
+          file assets/icon.png
+          test -s assets/icon.png
 
       - name: Verify project imports before building
         run: |
