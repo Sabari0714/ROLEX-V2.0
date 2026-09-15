@@ -1,9 +1,4 @@
-"""Rolex Horizon UI (v2.2.0) — Kivy Android cockpit + text fallback.
-
-The Android KV document intentionally has ONE root widget.  Kivy's
-Builder.load_string() must receive a single root rule; multiple top-level
-widgets can make the application fail during startup.
-"""
+"""Rolex Horizon UI (v2.2.0) — Kivy Android cockpit + text fallback."""
 from __future__ import annotations
 
 COLORS = {
@@ -24,15 +19,16 @@ try:
     from kivy.app import App
     from kivy.lang import Builder
     from kivy.core.window import Window
+    from kivy.uix.label import Label
     KIVY = True
 except Exception:  # pragma: no cover
     App = object
     Builder = None
     Window = None
+    Label = None
     KIVY = False
 
 
-# IMPORTANT: exactly one root widget (BoxLayout).
 KV = r"""
 #:import rolex_ui rolex.ui.android_ui
 
@@ -62,13 +58,13 @@ BoxLayout:
                     pos: self.pos
                     size: self.width, dp(2)
             Label:
-                text: '👑  R O L E X'
+                text: 'ROLEX AI'
                 font_size: '26sp'
                 bold: True
                 color: rolex_ui.COLORS['accent2']
             Label:
                 id: state
-                text: 'Horizon HUD · state offline · v2.2.0'
+                text: 'Horizon HUD · starting · v2.2.0'
                 font_size: '11sp'
                 color: rolex_ui.COLORS['dim']
 
@@ -98,7 +94,7 @@ BoxLayout:
                         pos: self.x, self.y
                         size: self.size
             Label:
-                text: '🎙  HEY GURU TO WAKE'
+                text: 'HEY GURU TO WAKE'
                 font_size: '12sp'
                 color: rolex_ui.COLORS['dim']
                 size_hint_y: None
@@ -131,8 +127,8 @@ BoxLayout:
                 foreground_color: rolex_ui.COLORS['text']
                 on_text_validate: app.send(self.text)
             Button:
-                text: '➤'
-                font_size: '22sp'
+                text: 'SEND'
+                font_size: '16sp'
                 background_normal: ''
                 background_color: rolex_ui.COLORS['accent']
                 color: (0.13, 0.09, 0.04, 1)
@@ -141,7 +137,7 @@ BoxLayout:
 
 
 class RolexApp(App if KIVY else object):
-    """Kivy app wiring the RolexAssistant v2 facade."""
+    """Kivy app.  UI is created before the assistant so startup failures are visible."""
 
     listening = False
 
@@ -154,20 +150,38 @@ class RolexApp(App if KIVY else object):
         self.scroll = None
 
     def build(self):
-        from ..assistant import get_assistant
-        self.assistant = self.assistant or get_assistant()
         if not KIVY:  # pragma: no cover
             return None
+
         Window.clearcolor = COLORS["bg"]
         root = Builder.load_string(KV)
         self.state_label = root.ids.get("state")
         self.chat = root.ids.get("chat")
         self.scroll = root.ids.get("chat_scroll")
+
+        # Now initialize the core. Any failure becomes a visible diagnostic
+        # inside the already-created Kivy window instead of killing the app.
+        if self.assistant is None:
+            try:
+                from ..assistant import get_assistant
+                self.assistant = get_assistant()
+            except Exception as exc:  # noqa: BLE001
+                self._show_startup_error(exc)
+                return root
+
         self._refresh_state()
         return root
 
     def on_start(self):
-        self.assistant.startup()
+        if self.assistant is None:
+            return
+        try:
+            report = self.assistant.startup()
+            failed = [k for k, v in report.items() if v == 'failed']
+            if failed and self.state_label is not None:
+                self.state_label.text = 'Horizon · DEGRADED · ' + ', '.join(failed)
+        except Exception as exc:  # noqa: BLE001
+            self._show_startup_error(exc)
         try:
             from ..voice.modulation import MODULATOR
             MODULATOR.speak("Rolex online. Hey Guru ready.")
@@ -176,46 +190,67 @@ class RolexApp(App if KIVY else object):
 
     def on_stop(self):
         if self.assistant is not None:
-            self.assistant.shutdown()
+            try:
+                self.assistant.shutdown()
+            except Exception:
+                pass
+
+    def _show_startup_error(self, exc: Exception) -> None:
+        msg = f"STARTUP ERROR\n{type(exc).__name__}: {exc}"
+        if self.state_label is not None:
+            self.state_label.text = 'Horizon · STARTUP ERROR'
+        if self.chat is not None and Label is not None:
+            self.chat.add_widget(Label(
+                text=msg,
+                size_hint_y=None,
+                height=dp(100) if False else 100,
+                color=COLORS['bad'],
+                font_size='13sp',
+                halign='left',
+            ))
 
     def send(self, text: str) -> None:
-        text = (text or "").strip()
-        if not text:
+        text = (text or '').strip()
+        if not text or self.assistant is None:
             return
         self._bubble(text, mine=True)
         from kivy.clock import Clock
         Clock.schedule_once(lambda *_: self._answer(text), 0.05)
 
     def _answer(self, text: str) -> None:
-        res = self.assistant.ask(text)
-        self._bubble(str(res))
-        self._speak(str(res))
-        self._refresh_state()
-        if self.scroll is not None:
-            self.scroll.scroll_y = 0
+        try:
+            res = self.assistant.ask(text)
+            self._bubble(str(res))
+            self._speak(str(res))
+            self._refresh_state()
+            if self.scroll is not None:
+                self.scroll.scroll_y = 0
+        except Exception as exc:  # noqa: BLE001
+            self._bubble(f"STARTUP/CORE ERROR: {type(exc).__name__}: {exc}")
 
     def _speak(self, text: str) -> None:
         try:
             from ..voice.modulation import MODULATOR
             MODULATOR.speak(text)
-        except Exception:  # noqa: BLE001
+        except Exception:
             pass
 
     def _bubble(self, text: str, mine: bool = False) -> None:
-        from kivy.uix.label import Label
-        color = COLORS["text"] if mine else COLORS["accent2"]
-        prefix = "👤 you   " if mine else "👑 rolex   "
+        if self.chat is None or Label is None:
+            return
+        color = COLORS['text'] if mine else COLORS['accent2']
+        prefix = 'you   ' if mine else 'rolex   '
         self.chat.add_widget(Label(
             text=prefix + text,
             size_hint_y=None,
-            halign="left",
+            halign='left',
             color=color,
-            font_size="15sp",
+            font_size='15sp',
             padding=(8, 8),
         ))
 
     def _refresh_state(self) -> None:
-        if self.state_label is None:
+        if self.state_label is None or self.assistant is None:
             return
         try:
             st = self.assistant.status()
@@ -223,26 +258,26 @@ class RolexApp(App if KIVY else object):
                 f"Horizon · {st['state']} · turns {st['turns']} · "
                 f"KB {st['kb_entries']} · todos {st.get('todos_pending', 0)}"
             )
-        except Exception:  # noqa: BLE001
-            self.state_label.text = "Horizon HUD · v2.2.0"
+        except Exception:
+            self.state_label.text = 'Horizon HUD · v2.2.0'
 
 
 def text_cockpit(assistant, scripted: list[str] | None = None,
                  max_turns: int = 0) -> dict:
     """No-Kivy futuristic terminal cockpit using the same facade."""
     W = 50
-    GOLD = "\033[38;5;178m"
-    DIM = "\033[38;5;245m"
-    OK = "\033[38;5;41m"
-    RESET = "\033[0m"
-    print("\n".join([
-        "",
-        f"{GOLD}╭" + "─" * W + "╮",
-        f"│ {'👑  R O L E X   H O R I Z O N':^46} │",
+    GOLD = '\033[38;5;178m'
+    DIM = '\033[38;5;245m'
+    OK = '\033[38;5;41m'
+    RESET = '\033[0m'
+    print('\n'.join([
+        '',
+        f"{GOLD}╭" + '─' * W + '╮',
+        f"│ {'ROLEX HORIZON':^46} │",
         f"│ {'personal intelligence · v2.2.0':^46} │",
-        f"╰" + "─" * W + "╯{RESET}",
+        f"╰" + '─' * W + '╯{RESET}',
         f"{DIM}  local-first · Hey Guru wake · Jarvis voice · Tanglish{RESET}",
-        "",
+        '',
     ]))
     assistant.startup()
     queue = list(scripted or [])
@@ -254,26 +289,17 @@ def text_cockpit(assistant, scripted: list[str] | None = None,
             raw = queue.pop(0)
         else:
             try:
-                raw = input(f"{GOLD}👤 you ▸ {RESET}")
+                raw = input(f'{GOLD}you ▸ {RESET}')
             except EOFError:
                 break
-        if raw.strip().lower() in ("exit", "quit", "bye"):
+        if raw.strip().lower() in ('exit', 'quit', 'bye'):
             break
         if not raw.strip():
             continue
         res = assistant.ask(raw)
-        bar = f"{OK}⚡ LOCAL{RESET}" if res.local else "☁ AI"
-        print(f"{GOLD}👑 rolex ▸{RESET} {res.text}")
-        print(f"{DIM}   ─ {bar} · route:{res.route} · "
-              f"conf:{res.confidence:.2f} · {res.seconds}s{RESET}\n")
+        bar = f'{OK}LOCAL{RESET}' if res.local else 'AI'
+        print(f'{GOLD}rolex ▸{RESET} {res.text}')
+        print(f'{DIM}   ─ {bar} · route:{res.route} · conf:{res.confidence:.2f} · {res.seconds}s{RESET}\n')
         turn += 1
     assistant.shutdown()
-    return {"turns": turn}
-
-
-if __name__ == "__main__":
-    from ..assistant import get_assistant
-    if KIVY:
-        RolexApp().run()
-    else:
-        text_cockpit(get_assistant())
+    return {'turns': turn}
