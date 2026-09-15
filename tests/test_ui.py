@@ -68,7 +68,9 @@ def test_text_cockpit_scripted_run():
         out = text_cockpit(a, scripted=["2 + 3", "version"], max_turns=2)
     assert out == {"turns": 2}
     text = buf.getvalue()
-    assert "R O L E X" in text
+    # v2.2 Horizon branding uses "ROLEX HORIZON" rather than the legacy
+    # spaced "R O L E X" banner. Keep the test aligned with the shipped UI.
+    assert "ROLEX HORIZON" in text
     assert "rolex ▸" in text and "5" in text
     assert "route:math" in text and "LOCAL" in text
     assert "route:command" in text
