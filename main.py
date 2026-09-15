@@ -1,30 +1,33 @@
-"""ROLEX Android entry point (Phase 15).
+"""ROLEX Android entry point.
 
-This is the file buildozer packages (see buildozer.spec:
-source.dir = ., main file = main.py). On Android it launches the
-Kivy cockpit; on desktop it falls back to the text cockpit.
+Keep Android UI startup independent from the optional/core assistant imports.
+The previous entry point constructed RolexAssistant before Kivy created a
+window, so any Android-only dependency/import failure could terminate the
+process with no visible UI and no useful on-screen diagnostic.
 """
+from __future__ import annotations
+
 import sys
 from pathlib import Path
 
-# make `rolex` importable when running from the project root
 ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from rolex.ui import KIVY                      # noqa: E402
-from rolex.assistant import get_assistant      # noqa: E402
-
 
 def main() -> None:
-    assistant = get_assistant()
+    # Import only the UI first.  This guarantees that a core-module failure
+    # cannot prevent Android from creating a visible window.
+    from rolex.ui import KIVY, RolexApp, text_cockpit
+
     if KIVY:
-        from rolex.ui import RolexApp
-        app = RolexApp(assistant=assistant)
-        app.run()
-    else:
-        from rolex.ui import text_cockpit
-        text_cockpit(assistant)
+        # Assistant construction is intentionally deferred to RolexApp.build().
+        # The UI can then display a startup error instead of silently exiting.
+        RolexApp().run()
+        return
+
+    from rolex.assistant import get_assistant
+    text_cockpit(get_assistant())
 
 
 if __name__ == "__main__":
