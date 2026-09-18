@@ -1,4 +1,4 @@
-"""Rolex V 2.0 UI — Kivy Android cockpit + text fallback."""
+"""Rolex Horizon UI — Kivy Android cockpit + text fallback."""
 from __future__ import annotations
 
 COLORS = {
@@ -64,7 +64,7 @@ BoxLayout:
                 color: rolex_ui.COLORS['accent2']
             Label:
                 id: state
-                text: 'Rolex V 2.0 · starting'
+                text: 'Rolex Horizon · starting'
                 font_size: '11sp'
                 color: rolex_ui.COLORS['dim']
 
@@ -270,7 +270,7 @@ class RolexApp(App if KIVY else object):
                 f"KB {st['kb_entries']} · todos {st.get('todos_pending', 0)}"
             )
         except Exception:
-            self.state_label.text = 'Rolex V 2.0'
+            self.state_label.text = 'Rolex Horizon'
 
 
 def text_cockpit(assistant, scripted: list[str] | None = None,
@@ -284,7 +284,7 @@ def text_cockpit(assistant, scripted: list[str] | None = None,
     print('\n'.join([
         '',
         f"{GOLD}╭" + '─' * W + '╮',
-        f"│ {'ROLEX V 2.0':^46} │",
+        f"│ {'ROLEX HORIZON':^46} │",
         f"│ {'personal intelligence · local-first':^46} │",
         f"╰" + '─' * W + '╯{RESET}',
         f"{DIM}  local-first · Hey Guru wake · Jarvis voice · Tanglish{RESET}",
