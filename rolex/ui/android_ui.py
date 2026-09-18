@@ -173,8 +173,18 @@ class RolexApp(App if KIVY else object):
         return root
 
     def on_start(self):
+        # Render the first frame before starting the large assistant graph.
+        # This prevents a slow/failing core import from looking like a
+        # completely failed Android launch.
         if self.assistant is None:
             return
+        try:
+            from kivy.clock import Clock
+            Clock.schedule_once(self._finish_startup, 0.15)
+        except Exception as exc:  # noqa: BLE001
+            self._show_startup_error(exc)
+
+    def _finish_startup(self, *_args):
         try:
             report = self.assistant.startup()
             failed = [k for k, v in report.items() if v == 'failed']
@@ -182,6 +192,7 @@ class RolexApp(App if KIVY else object):
                 self.state_label.text = 'Rolex · DEGRADED · ' + ', '.join(failed)
         except Exception as exc:  # noqa: BLE001
             self._show_startup_error(exc)
+            return
         try:
             from ..voice.modulation import MODULATOR
             MODULATOR.speak("Rolex online. Hey Guru ready.")
