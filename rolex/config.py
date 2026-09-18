@@ -23,7 +23,7 @@ class Config:
     # Identity -----------------------------------------------------------
     NAME = "Rolex"
     WAKE_WORD = "hey guru"
-    VERSION = "2.2.0"            # v2.2 Neon Horizon (multi-provider keys) (bass-reactive HUD)
+    VERSION = "2.0.0"            # Rolex V 2.0
 
     # Paths ---------------------------------------------------------------
     ROOT_DIR = PROJECT_ROOT
