@@ -1,4 +1,4 @@
-"""Rolex Horizon UI (v2.2.0) — Kivy Android cockpit + text fallback."""
+"""Rolex V 2.0 UI — Kivy Android cockpit + text fallback."""
 from __future__ import annotations
 
 COLORS = {
@@ -64,7 +64,7 @@ BoxLayout:
                 color: rolex_ui.COLORS['accent2']
             Label:
                 id: state
-                text: 'Horizon HUD · starting · v2.2.0'
+                text: 'Rolex V 2.0 · starting'
                 font_size: '11sp'
                 color: rolex_ui.COLORS['dim']
 
@@ -94,7 +94,7 @@ BoxLayout:
                         pos: self.x, self.y
                         size: self.size
             Label:
-                text: 'HEY GURU TO WAKE'
+                text: 'HEY GURU · READY'
                 font_size: '12sp'
                 color: rolex_ui.COLORS['dim']
                 size_hint_y: None
@@ -179,7 +179,7 @@ class RolexApp(App if KIVY else object):
             report = self.assistant.startup()
             failed = [k for k, v in report.items() if v == 'failed']
             if failed and self.state_label is not None:
-                self.state_label.text = 'Horizon · DEGRADED · ' + ', '.join(failed)
+                self.state_label.text = 'Rolex · DEGRADED · ' + ', '.join(failed)
         except Exception as exc:  # noqa: BLE001
             self._show_startup_error(exc)
         try:
@@ -198,7 +198,7 @@ class RolexApp(App if KIVY else object):
     def _show_startup_error(self, exc: Exception) -> None:
         msg = f"STARTUP ERROR\n{type(exc).__name__}: {exc}"
         if self.state_label is not None:
-            self.state_label.text = 'Horizon · STARTUP ERROR'
+            self.state_label.text = 'Rolex · STARTUP ERROR'
         if self.chat is not None and Label is not None:
             self.chat.add_widget(Label(
                 text=msg,
@@ -255,11 +255,11 @@ class RolexApp(App if KIVY else object):
         try:
             st = self.assistant.status()
             self.state_label.text = (
-                f"Horizon · {st['state']} · turns {st['turns']} · "
+                f"Rolex · {st['state']} · turns {st['turns']} · "
                 f"KB {st['kb_entries']} · todos {st.get('todos_pending', 0)}"
             )
         except Exception:
-            self.state_label.text = 'Horizon HUD · v2.2.0'
+            self.state_label.text = 'Rolex V 2.0'
 
 
 def text_cockpit(assistant, scripted: list[str] | None = None,
@@ -273,8 +273,8 @@ def text_cockpit(assistant, scripted: list[str] | None = None,
     print('\n'.join([
         '',
         f"{GOLD}╭" + '─' * W + '╮',
-        f"│ {'ROLEX HORIZON':^46} │",
-        f"│ {'personal intelligence · v2.2.0':^46} │",
+        f"│ {'ROLEX V 2.0':^46} │",
+        f"│ {'personal intelligence · local-first':^46} │",
         f"╰" + '─' * W + '╯{RESET}',
         f"{DIM}  local-first · Hey Guru wake · Jarvis voice · Tanglish{RESET}",
         '',
